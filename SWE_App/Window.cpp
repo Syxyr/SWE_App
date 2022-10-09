@@ -1,5 +1,11 @@
 #include "Window.h"
 
+wxBEGIN_EVENT_TABLE(Window, wxFrame)
+
+EVT_BUTTON(wxID_ANY, Window::OnButtonClick)
+
+wxEND_EVENT_TABLE()
+
 Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), wxSize(400, 410)) {
 
 	//FIRST ROW

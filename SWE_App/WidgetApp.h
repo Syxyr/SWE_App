@@ -9,5 +9,6 @@ class WidgetApp : public wxApp
 	Window* window = nullptr;
 public:
 	virtual bool OnInit();
+
 };
 
