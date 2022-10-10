@@ -1,7 +1,7 @@
 #include "WidgetApp.h"
 #include "Window.h"
 #include "wxMathHelper.h"
-#include <wx/vector.h>
+//#include <wx/vector.h>
 
 wxIMPLEMENT_APP(WidgetApp);
 
@@ -158,7 +158,7 @@ void Window::OnButtonClick(wxCommandEvent& evt) {
 		first = 0;
 		second = 0;
 		result = 0;
-		EqNums.clear();
+		//EqNums.clear();
 		textBox->Clear();
 		break;
 	case Window::LPAREN:

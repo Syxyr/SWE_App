@@ -1,6 +1,6 @@
 #pragma once
 #include "Window.h"
-#include <wx/vector.h>
+//#include <wx/vector.h>
 
 class Window;
 
@@ -23,7 +23,7 @@ bool operation = false;
 
 OPS OpId = ADD;
 
-wxVector<double> EqNums = wxVector<double>::wxVector(2);
+//wxVector<double> EqNums = wxVector<double>::wxVector(2);
 
 /*
 void AssignNum(wxVector<double>& dubs, wxTextCtrl* box, int TextNDX);
