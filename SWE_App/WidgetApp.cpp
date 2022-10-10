@@ -12,92 +12,152 @@ bool WidgetApp::OnInit() {
 }
 
 void Window::OnButtonClick(wxCommandEvent& evt) {
-	
-	BUTTONS id = (BUTTONS)evt.GetId();
-	wxString temp = "";
-	int TextBoxNDX = 0;
-	bool operation = false;
 
-	wxVector<double> EqNums;
+	BUTTONS id = (BUTTONS)evt.GetId();
+	
 
 	switch (id)
 	{
 	case Window::ZERO:
+		if (!operation) {
+			num1.Append("0");
+		}
+		else { num2.Append("0"); }
 		textBox->AppendText("0");
-		TextBoxNDX++;
 		break;
 	case Window::ONE:
+		if (!operation) {
+			num1.Append("1");
+		}
+		else { num2.Append("1"); }
 		textBox->AppendText("1");
-		TextBoxNDX++;
 		break;
 	case Window::TWO:
+		if (!operation) {
+			num1.Append("2");
+		}
+		else { num2.Append("2"); }
 		textBox->AppendText("2");
-		TextBoxNDX++;
 		break;
 	case Window::THREE:
+		if (!operation) {
+			num1.Append("3");
+		}
+		else { num2.Append("3"); }
 		textBox->AppendText("3");
-		TextBoxNDX++;
 		break;
 	case Window::FOUR:
+		if (!operation) {
+			num1.Append("4");
+		}
+		else { num2.Append("4"); }
 		textBox->AppendText("4");
-		TextBoxNDX++;
 		break;
 	case Window::FIVE:
+		if (!operation) {
+			num1.Append("5");
+		}
+		else { num2.Append("5"); }
 		textBox->AppendText("5");
-		TextBoxNDX++;
 		break;
 	case Window::SIX:
+		if (!operation) {
+			num1.Append("6");
+		}
+		else { num2.Append("6"); }
 		textBox->AppendText("6");
-		TextBoxNDX++;
 		break;
 	case Window::SEVEN:
+		if (!operation) {
+			num1.Append("7");
+		}
+		else { num2.Append("7"); }
 		textBox->AppendText("7");
-		TextBoxNDX++;
 		break;
 	case Window::EIGHT:
+		if (!operation) {
+			num1.Append("8");
+		}
+		else { num2.Append("8"); }
 		textBox->AppendText("8");
-		TextBoxNDX++;
 		break;
 	case Window::NINE:
+		if (!operation) {
+			num1.Append("9");
+		}
+		else { num2.Append("9"); }
 		textBox->AppendText("9");
-		TextBoxNDX++;
 		break;
 	case Window::PLUS:
-		if (!operation){	
-			AssignNum(EqNums, textBox, TextBoxNDX);
+		if (!operation){
+			{ OpId = ADD; }
+			first = wxAtoi(num1);
 			textBox->AppendText("+");
-			TextBoxNDX++;
 		}
 		operation = true;
 		break;
 	case Window::MINUS:
 		if (!operation) {
+			{ OpId = SUB;}
+			first = wxAtoi(num1);
 			textBox->AppendText("-");
-			TextBoxNDX++;
 		}
 		operation = true;
 		break;
 	case Window::MULT:
 		if (!operation) {
+			{ OpId = TIMES; }
+			first = wxAtoi(num1);
 			textBox->AppendText("*");
-			TextBoxNDX++;
 		}
 		operation = true;
 		break;
 	case Window::DIV:
 		if (!operation) {
+			{OpId = DIVIDE; }
+			first = wxAtoi(num1);
 			textBox->AppendText("/");
-			TextBoxNDX++;
 		}
 		operation = true;
 		break;
 	case Window::EQUAL:
-		textBox->AppendText("=");
+		if (operation) {
+			second = wxAtoi(num2);
+			textBox->AppendText("=");
+			switch (OpId) {
+			case ADD:
+				result = first + second;
+				resString << result;
+				textBox->AppendText(resString);
+				break;
+			case SUB:
+				result = first - second;
+				resString << result;
+				textBox->AppendText(resString);
+				break;
+			case TIMES:
+				result = first * second;
+				resString << result;
+				textBox->AppendText(resString);
+				break;
+			case DIVIDE:
+				result = first / second;
+				resString << result;
+				textBox->AppendText(resString);
+				break;
+			default:
+				break;
+			}
+		}
 		break;
 	case Window::CLEAR:
 		operation = false;
-		TextBoxNDX = 0;
-		temp = "";
+		num1 = "";
+		num2 = "";
+		resString = "";
+		first = 0;
+		second = 0;
+		result = 0;
 		EqNums.clear();
 		textBox->Clear();
 		break;
@@ -126,12 +186,14 @@ void Window::OnButtonClick(wxCommandEvent& evt) {
 		//textBox->AppendText("tan(");
 		break;
 	case Window::NEG:
+		// DISABLED FOR FUTURE
+		/*
 		{temp = textBox->GetValue(); }
 		if (temp[0].GetValue() != '-')
 		{
 			textBox->ChangeValue("-(" + temp + ")");
-			TextBoxNDX += 2;
 		}
+		*/
 		break;
 	case Window::DEC:
 		// DISABLED FOR FUTURE IMPLEMENTATION
