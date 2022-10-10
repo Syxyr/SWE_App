@@ -50,20 +50,20 @@ public:
 		SEVEN,
 		EIGHT,
 		NINE,
-		PLUS,
+		LPAREN,
+		RPAREN,
+		NEG,
+		DEC,
+		PLUS = 100,
 		MINUS,
 		MULT,
 		DIV,
-		EQUAL,
-		CLEAR,
-		LPAREN,
-		RPAREN,
 		MOD,
-		SIN,
+		EQUAL = 1000,
+		CLEAR,
+		SIN = 5000,
 		COS,
-		TAN,
-		NEG,
-		DEC
+		TAN
 	};
 };
 

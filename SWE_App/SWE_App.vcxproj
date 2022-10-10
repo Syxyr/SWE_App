@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="WidgetApp.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="wxMathHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WidgetApp.cpp" />
