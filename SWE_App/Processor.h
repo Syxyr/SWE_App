@@ -5,9 +5,9 @@
 class Window;
 
 enum OPS {
+	TIMES = '*',
 	ADD = '+',
 	SUB = '-',
-	TIMES = '*',
 	DIVIDE = '/',
 	SIN = 's',
 	COS = 'c',
@@ -20,7 +20,7 @@ class Processor
 private:
 	wxString queue = "";
 	wxVector<std::string> opStack;
-	wxVector<std::string> output;
+	wxVector<std::string> output = wxVector<std::string>(3);
 	float operand = NULL;
 	float result = NULL;
 	wxVector<std::string>::iterator iter = opStack.begin();
@@ -54,9 +54,18 @@ public:
 
 	//solve RPN
 	float ComputeEqual(wxVector<std::string> x);
+
+	//singleton
 	static Processor* GetInstance();
+
+	//getters
 	wxString GetQueue() { return queue; }
+
+	//setters
+	wxString SetQueue(wxString val) { queue = val; }
 	wxString AddToQueue(wxString val) { return queue.Append(val); }
+
+	//clear data
 	void ResetProcessor()
 	{
 		queue = "";
@@ -65,6 +74,10 @@ public:
 		operand = NULL;
 		result = NULL;
 		iter = opStack.begin();
+	}
+	void ClearQueue()
+	{
+		queue.clear();
 	}
 };
 

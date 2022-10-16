@@ -61,6 +61,10 @@ float ComputeMod(std::string x)
 {
 
 }
+float ComputeEqual(wxVector<std::string> x)
+{
+
+}
 Processor* Processor::GetInstance()
 {
 	if (processor_ == nullptr)
