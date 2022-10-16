@@ -54,14 +54,14 @@ public:
 		RPAREN,
 		NEG,
 		DEC,
-		PLUS = 100,
+		PLUS,
 		MINUS,
 		MULT,
 		DIV,
 		MOD,
-		EQUAL = 1000,
+		EQUAL,
 		CLEAR,
-		SIN = 5000,
+		SIN,
 		COS,
 		TAN
 	};

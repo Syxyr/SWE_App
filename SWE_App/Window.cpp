@@ -43,5 +43,5 @@ Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(200, 200), w
 	buttonDEC = new wxButton(this, DEC, ".", wxPoint(140, 305), wxSize(60, 60));
 
 
-	textBox = new wxTextCtrl(this, wxID_ANY, "", wxPoint(10, 10), wxSize(365, 30));
+	textBox = new wxTextCtrl(this, wxID_ANY, "", wxPoint(10, 10), wxSize(365, 30), wxTE_READONLY);
 }
