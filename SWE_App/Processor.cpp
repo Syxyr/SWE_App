@@ -1,70 +1,72 @@
 #include "Processor.h"
 
+Processor* Processor::processor_ = nullptr;
 
-
-const std::string TagString(wxString input)
+wxString Processor::TagString(wxString input)
 {
 	std::string str = input.wxString::ToStdString();
 
-	bool isNumber = std::stof(str);
+	float isNumber = std::stof(str);
 
 	if (isNumber)
 	{
-		return "#" + str;
+		return *input.insert(input.begin(), '#');
 	}
 	else
 	{
-		return "$" + str;
+		return *input.insert(input.begin(), '#');
 	}
 }
-wxVector<std::string> AddNumToOutput(const std::string taggedStr)
-{
 
-}
-wxVector<std::string> AddOpToStack(const std::string taggedOp)
-{
 
-}
-wxVector<std::string> AddOp(wxVector<std::string> vecToAddTo, const std::string taggedOp)
+//wxVector<std::string> AddNumToOutput(const std::string taggedStr)
+//{
+//
+//}
+//wxVector<std::string> AddOpToStack(const std::string taggedOp)
+//{
+//
+//}
+void Processor::BuildInfix(wxVector<wxString> vecToAddTo, const wxString taggedOp)
 {
-
+	vecToAddTo.push_back(taggedOp);
 }
-float ComputeAdd(std::string a, std::string b)
-{
-
-}
-float ComputeSubtract(std::string a, std::string b)
-{
-
-}
-float ComputeMultiply(std::string a, std::string b)
-{
-
-}
-float ComputeDivide(std::string a, std::string b)
-{
-
-}
-float ComputeSin(std::string x)
-{
-
-}
-float ComputeTan(std::string x)
-{
-
-}
-float ComputeCos(std::string x)
-{
-
-}
-float ComputeMod(std::string x)
-{
-
-}
-float ComputeEqual(wxVector<std::string> x)
-{
-
-}
+//float ComputeAdd(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeSubtract(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeMultiply(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeDivide(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeSin(std::string x)
+//{
+//
+//}
+//float ComputeTan(std::string x)
+//{
+//
+//}
+//float ComputeCos(std::string x)
+//{
+//
+//}
+//float ComputeMod(std::string x)
+//{
+//
+//}
+//float ComputeEqual(wxVector<std::string> x)
+//{
+//
+//}
 Processor* Processor::GetInstance()
 {
 	if (processor_ == nullptr)

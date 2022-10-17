@@ -17,30 +17,29 @@ enum OPS {
 
 class Processor
 {
-private:
-	wxString queue = "";
-	wxVector<std::string> opStack;
-	wxVector<std::string> output = wxVector<std::string>(3);
-	float operand = NULL;
-	float result = NULL;
-	wxVector<std::string>::iterator iter = opStack.begin();
-	const float PI = 3.141592654f;
 protected:
 	Processor() {}
 	static Processor* processor_;
 
+private:
+	wxString queue = "";
+	wxVector<wxString> opStack;
+	wxVector<wxString> output;
+	wxVector<wxString> infix;
 
 public:
 	//disable copy & assignment 
 	Processor(Processor& other) = delete;
-	void operator=(const Processor&) = delete;
+	void operator=(Processor& other) = delete;
 
 	//tag strings for quick id
-	const std::string TagString(wxString input);
+	wxString TagString(wxString input);
+
+	//tag queue, and add tagged operation
 
 	//build RPN
 	wxVector<std::string> AddNumToOutput(const std::string taggedStr);
-	wxVector<std::string> AddOp(wxVector<std::string> vecToAddTo, const std::string taggedOp);
+	void BuildInfix(wxVector<wxString> vecToAddTo, const wxString taggedOp);
 
 	//computations
 	float ComputeAdd(std::string a, std::string b);
@@ -60,9 +59,12 @@ public:
 
 	//getters
 	wxString GetQueue() { return queue; }
+	wxVector<wxString> GetOpStack() { return opStack; }
+	wxVector<wxString> GetOutput() { return output; }
+	wxVector<wxString> GetInfix() { return infix; }
 
 	//setters
-	wxString SetQueue(wxString val) { queue = val; }
+	void SetQueue(wxString val) { queue = val; }
 	wxString AddToQueue(wxString val) { return queue.Append(val); }
 
 	//clear data
@@ -71,9 +73,7 @@ public:
 		queue = "";
 		opStack.clear();
 		output.clear();
-		operand = NULL;
-		result = NULL;
-		iter = opStack.begin();
+		infix.clear();
 	}
 	void ClearQueue()
 	{

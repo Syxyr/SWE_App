@@ -2,11 +2,11 @@
 #include "Window.h"
 #include "Processor.h"
 
+
 wxIMPLEMENT_APP(WidgetApp);
 
 bool WidgetApp::OnInit() {
 	window = new Window();
-	Processor::GetInstance();
 	window->Show();
 	return true;
 }
@@ -14,69 +14,71 @@ bool WidgetApp::OnInit() {
 void Window::OnButtonClick(wxCommandEvent& evt) {
 
 	BUTTONS id = (BUTTONS)evt.GetId();
+
 	switch (id)
 	{
 	case Window::ZERO:
-		Processor::GetInstance()->Processor::AddToQueue("0");
+		Processor::GetInstance()->AddToQueue("0");
 		textBox->AppendText("0");
 		break;
 	case Window::ONE:
-		Processor::GetInstance()->Processor::AddToQueue("1");
+		Processor::GetInstance()->AddToQueue("1");
 		textBox->AppendText("1");
 		break;
 	case Window::TWO:
-		Processor::GetInstance()->Processor::AddToQueue("2");
+		Processor::GetInstance()->AddToQueue("2");
 		textBox->AppendText("2");
 		break;
 	case Window::THREE:
-		Processor::GetInstance()->Processor::AddToQueue("3");
+		Processor::GetInstance()->AddToQueue("3");
 		textBox->AppendText("3");
 		break;
 	case Window::FOUR:
-		Processor::GetInstance()->Processor::AddToQueue("4");
+		Processor::GetInstance()->AddToQueue("4");
 		textBox->AppendText("4");
 		break;
 	case Window::FIVE:
-		Processor::GetInstance()->Processor::AddToQueue("5");
+		Processor::GetInstance()->AddToQueue("5");
 		textBox->AppendText("5");
 		break;
 	case Window::SIX:
-		Processor::GetInstance()->Processor::AddToQueue("6");
+		Processor::GetInstance()->AddToQueue("6");
 		textBox->AppendText("6");
 		break;
 	case Window::SEVEN:
-		Processor::GetInstance()->Processor::AddToQueue("7");
+		Processor::GetInstance()->AddToQueue("7");
 		textBox->AppendText("7");
 		break;
 	case Window::EIGHT:
-		Processor::GetInstance()->Processor::AddToQueue("8");
+		Processor::GetInstance()->AddToQueue("8");
 		textBox->AppendText("8");
 		break;
 	case Window::NINE:
-		Processor::GetInstance()->Processor::AddToQueue("9");
+		Processor::GetInstance()->AddToQueue("9");
 		textBox->AppendText("9");
 		break;
 	case Window::PLUS:
-		Processor::GetInstance()->
-			Processor::SetQueue(Processor::GetInstance()->
-				TagString(Processor::GetInstance()->
-					Processor::GetQueue()));
-		Processor::GetInstance()->Processor::ClearQueue();
+		Processor::GetInstance()->AddToQueue("+");
 		textBox->AppendText("+");
 		break;
 	case Window::MINUS:
+		Processor::GetInstance()->AddToQueue("-");
 		textBox->AppendText("-");
 		break;
 	case Window::MULT:
+		Processor::GetInstance()->AddToQueue("*");
 		textBox->AppendText("*");
 		break;
 	case Window::DIV:
+		Processor::GetInstance()->AddToQueue("/");
 		textBox->AppendText("/");
 		break;
 	case Window::EQUAL:
+		Processor::GetInstance()->AddToQueue("=");
 		textBox->AppendText("=");
 		break;
 	case Window::CLEAR:
+		Processor::GetInstance()->ResetProcessor();
 		textBox->Clear();
 		break;
 	case Window::LPAREN:
@@ -96,9 +98,23 @@ void Window::OnButtonClick(wxCommandEvent& evt) {
 	case Window::TAN:
 		textBox->AppendText("tan(");
 		break;
-	case Window::NEG:		
+	case Window::NEG:
+	{float temp = std::stof((std::string)Processor::GetInstance()->GetQueue());
+	if (!temp) {
+		break;
+	}
+	else if (temp > 0) {
+		Processor::GetInstance()->
+			SetQueue("-" + Processor::GetInstance()->GetQueue());
+	}
+	else if (temp < 0) {
+		Processor::GetInstance()->
+			SetQueue(Processor::GetInstance()->GetQueue().erase(0, 1));
+	}
+	}
 		break;
 	case Window::DEC:
+		Processor::GetInstance()->AddToQueue(".");
 		textBox->AppendText(".");
 		break;
 	default:
