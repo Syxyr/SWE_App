@@ -10,8 +10,14 @@ bool WidgetApp::OnInit() {
 	window->Show();
 	return true;
 }
+int WidgetApp::OnExit()
+{
+	delete window;
+	return 0;
+}
 
-void Window::OnButtonClick(wxCommandEvent& evt) {
+void Window::OnButtonClick(wxCommandEvent& evt) 
+{
 
 	BUTTONS id = (BUTTONS)evt.GetId();
 
@@ -58,64 +64,52 @@ void Window::OnButtonClick(wxCommandEvent& evt) {
 		textBox->AppendText("9");
 		break;
 	case Window::PLUS:
-		Processor::GetInstance()->AddToQueue("+");
-		textBox->AppendText("+");
+		Processor::GetInstance()->AddToQueue(" + ");
+		textBox->AppendText(" + ");
 		break;
 	case Window::MINUS:
-		Processor::GetInstance()->AddToQueue("-");
-		textBox->AppendText("-");
+		Processor::GetInstance()->AddToQueue(" - ");
+		textBox->AppendText(" - ");
 		break;
 	case Window::MULT:
-		Processor::GetInstance()->AddToQueue("*");
-		textBox->AppendText("*");
+		Processor::GetInstance()->AddToQueue(" * ");
+		textBox->AppendText(" * ");
 		break;
 	case Window::DIV:
 		Processor::GetInstance()->AddToQueue("/");
-		textBox->AppendText("/");
+		textBox->AppendText(" / ");
 		break;
 	case Window::EQUAL:
-		Processor::GetInstance()->AddToQueue("=");
-		textBox->AppendText("=");
+		Processor::GetInstance()->SetQueueToRPN(Processor::GetInstance()->GetQueue());
+		textBox->AppendText(" = ");
 		break;
 	case Window::CLEAR:
 		Processor::GetInstance()->ResetProcessor();
 		textBox->Clear();
 		break;
 	case Window::LPAREN:
-		textBox->AppendText("(");
+		textBox->AppendText(" (");
 		break;
 	case Window::RPAREN:
-		textBox->AppendText(")");
+		textBox->AppendText(") ");
 		break;
 	case Window::MOD:
 		break;
 	case Window::SIN:
-		textBox->AppendText("sin(");
+		textBox->AppendText(" sin(");
 		break;
 	case Window::COS:
-		textBox->AppendText("cos(");
+		textBox->AppendText(" cos(");
 		break;
 	case Window::TAN:
-		textBox->AppendText("tan(");
+		textBox->AppendText(" tan(");
 		break;
 	case Window::NEG:
-	{float temp = std::stof((std::string)Processor::GetInstance()->GetQueue());
-	if (!temp) {
-		break;
-	}
-	else if (temp > 0) {
-		Processor::GetInstance()->
-			SetQueue("-" + Processor::GetInstance()->GetQueue());
-	}
-	else if (temp < 0) {
-		Processor::GetInstance()->
-			SetQueue(Processor::GetInstance()->GetQueue().erase(0, 1));
-	}
-	}
+
 		break;
 	case Window::DEC:
-		Processor::GetInstance()->AddToQueue(".");
-		textBox->AppendText(".");
+		Processor::GetInstance()->AddToQueue(" . ");
+		textBox->AppendText(" . ");
 		break;
 	default:
 		break;

@@ -1,19 +1,23 @@
 #pragma once
 #include "Window.h"
 #include <wx/vector.h>
+#include <wx/stack.h>
 
 class Window;
 
-enum OPS {
-	TIMES = '*',
-	ADD = '+',
-	SUB = '-',
-	DIVIDE = '/',
-	SIN = 's',
-	COS = 'c',
-	TAN = 't',
-	MOD = 'm'
+
+enum OP {
+	TIMES = 1,
+	ADD = 0,
+	SUB = 0,
+	DIVIDE = 1,
+	SIN = 2,
+	COS = 2,
+	TAN = 2,
+	MOD = 2
 };
+
+
 
 class Processor
 {
@@ -22,24 +26,14 @@ protected:
 	static Processor* processor_;
 
 private:
+	// queue to hold infix notation
 	wxString queue = "";
-	wxVector<wxString> opStack;
-	wxVector<wxString> output;
-	wxVector<wxString> infix;
+	wxString::iterator q_iter = queue.begin();
 
 public:
 	//disable copy & assignment 
 	Processor(Processor& other) = delete;
 	void operator=(Processor& other) = delete;
-
-	//tag strings for quick id
-	wxString TagString(wxString input);
-
-	//tag queue, and add tagged operation
-
-	//build RPN
-	wxVector<std::string> AddNumToOutput(const std::string taggedStr);
-	void BuildInfix(wxVector<wxString> vecToAddTo, const wxString taggedOp);
 
 	//computations
 	float ComputeAdd(std::string a, std::string b);
@@ -52,28 +46,23 @@ public:
 	float ComputeMod(std::string x);
 
 	//solve RPN
-	float ComputeEqual(wxVector<std::string> x);
+	float ComputeEqual(wxString x);
 
 	//singleton
 	static Processor* GetInstance();
 
 	//getters
 	wxString GetQueue() { return queue; }
-	wxVector<wxString> GetOpStack() { return opStack; }
-	wxVector<wxString> GetOutput() { return output; }
-	wxVector<wxString> GetInfix() { return infix; }
+	wxString::iterator GetQIter() { return q_iter; }
 
 	//setters
-	void SetQueue(wxString val) { queue = val; }
+	bool SetQueueToRPN(wxString val);
 	wxString AddToQueue(wxString val) { return queue.Append(val); }
 
 	//clear data
 	void ResetProcessor()
 	{
 		queue = "";
-		opStack.clear();
-		output.clear();
-		infix.clear();
 	}
 	void ClearQueue()
 	{
