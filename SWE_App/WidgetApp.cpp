@@ -7,6 +7,7 @@ wxIMPLEMENT_APP(WidgetApp);
 
 bool WidgetApp::OnInit() {
 	window = new Window();
+	Processor::GetInstance();
 	window->Show();
 	return true;
 }
@@ -64,15 +65,15 @@ void Window::OnButtonClick(wxCommandEvent& evt)
 		textBox->AppendText("9");
 		break;
 	case Window::PLUS:
-		Processor::GetInstance()->AddToQueue(" + ");
+		Processor::GetInstance()->AddToQueue("+");
 		textBox->AppendText(" + ");
 		break;
 	case Window::MINUS:
-		Processor::GetInstance()->AddToQueue(" - ");
+		Processor::GetInstance()->AddToQueue("-");
 		textBox->AppendText(" - ");
 		break;
 	case Window::MULT:
-		Processor::GetInstance()->AddToQueue(" * ");
+		Processor::GetInstance()->AddToQueue("*");
 		textBox->AppendText(" * ");
 		break;
 	case Window::DIV:
@@ -80,22 +81,27 @@ void Window::OnButtonClick(wxCommandEvent& evt)
 		textBox->AppendText(" / ");
 		break;
 	case Window::EQUAL:
-		Processor::GetInstance()->SetQueueToRPN(Processor::GetInstance()->GetQueue());
-		textBox->AppendText(" = ");
+		Processor::GetInstance()->Processor::SetQueueToRPN();
+		textBox->AppendText(" = " + Processor::GetInstance()->GetQueue());
 		break;
 	case Window::CLEAR:
 		Processor::GetInstance()->ResetProcessor();
 		textBox->Clear();
 		break;
 	case Window::LPAREN:
+		Processor::GetInstance()->AddToQueue("(");
 		textBox->AppendText(" (");
 		break;
 	case Window::RPAREN:
+		Processor::GetInstance()->AddToQueue(")");
 		textBox->AppendText(") ");
 		break;
 	case Window::MOD:
+		Processor::GetInstance()->AddToQueue("m");
+		textBox->AppendText("%");
 		break;
 	case Window::SIN:
+		Processor::GetInstance()->AddToQueue("s");
 		textBox->AppendText(" sin(");
 		break;
 	case Window::COS:

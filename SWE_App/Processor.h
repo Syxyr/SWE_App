@@ -56,7 +56,8 @@ public:
 	wxString::iterator GetQIter() { return q_iter; }
 
 	//setters
-	bool SetQueueToRPN(wxString val);
+	bool SetQueueToRPN();
+	
 	wxString AddToQueue(wxString val) { return queue.Append(val); }
 
 	//clear data

@@ -45,29 +45,38 @@ bool isOp(const wxString& _id)
 	return _id == "+" || _id == "-" || _id == "/" || _id == "*" 
 		|| _id == "s" || _id == "c" || _id == "t" || _id == "m";
 }
-bool SetQueueToRPN(wxString val)
+bool Processor::SetQueueToRPN()
 {
 	bool complete = true;
 	wxStack<wxString> opStack;
 	wxVector<wxString> output;
 
-	for (size_t i = 0; i < val.length(); i++)
+	//checking each char in queue
+	for (size_t i = 0; i < GetQueue().length(); i++)
 	{
-		wxString id = val[i];
+		//assign each char to string
+		wxString id = GetQueue()[i];
 		
+		//check for operator
 		if (isOp(id))
 		{
 			wxString op1 = id;
 
+			//check for presence of other operators
 			if (!opStack.empty())
 			{
+				//assign last operator on stack to compare precedence
 				wxString op2 = opStack.top();
 
-				while (isOp(op1) && CompareOP(op1, op2) <= 0)
+				//if operator has higher precedence in stack, result will be less than 0
+				//Otherwise stack has higher precedence
+				while (CompareOP(op1, op2) <= 0)
 				{
+					//pop off stack, into output
 					opStack.pop();
 					output.push_back(op2);
 
+					//if not empty, reassign and compare again
 					if (!opStack.empty())
 					{
 						op2 = opStack.top();
@@ -75,14 +84,15 @@ bool SetQueueToRPN(wxString val)
 					else
 						break;
 				}
-			}
+			}//if stack empty, push first op into stack
 			opStack.push(op1);
 		}
-
+		//push left parenthesis to stack
 		else if (id == "(")
 		{
 			opStack.push(id);
 		}
+		//search stack for left parenthesis and push operators to output
 		else if (id == ")")
 		{
 			wxString topOp = opStack.top();
@@ -100,13 +110,13 @@ bool SetQueueToRPN(wxString val)
 			{
 				opStack.pop();
 			}
+			//mismatched parenthesis
 			if (topOp != "(")
 			{
 				return false;
 			}
 		}
-		else if (id == " ") continue;
-
+		//otherwise it's a number
 		else
 		{
 			wxString temp = "";
@@ -116,50 +126,53 @@ bool SetQueueToRPN(wxString val)
 			}
 			output.push_back(temp);
 		}
+		//clear the queue
 		Processor::GetInstance()->ClearQueue();
-		for (wxVector<wxString>::iterator i = output.begin(); i != output.end(); i++)
+		//reset queue to RPN
+		for (wxVector<wxString>::iterator i = output.begin(); i != output.end(); )
 		{
 			Processor::GetInstance()->GetQueue().Append(*i);
-			return complete;
+			++i;
 		}
 	}
+			return complete;
 }
-float ComputeAdd(std::string a, std::string b)
-{
-
-}
-float ComputeSubtract(std::string a, std::string b)
-{
-
-}
-float ComputeMultiply(std::string a, std::string b)
-{
-
-}
-float ComputeDivide(std::string a, std::string b)
-{
-
-}
-float ComputeSin(std::string x)
-{
-
-}
-float ComputeTan(std::string x)
-{
-
-}
-float ComputeCos(std::string x)
-{
-
-}
-float ComputeMod(std::string x)
-{
-
-}
-float ComputeEqual(wxString x)
-{
-
-}
+//float ComputeAdd(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeSubtract(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeMultiply(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeDivide(std::string a, std::string b)
+//{
+//
+//}
+//float ComputeSin(std::string x)
+//{
+//
+//}
+//float ComputeTan(std::string x)
+//{
+//
+//}
+//float ComputeCos(std::string x)
+//{
+//
+//}
+//float ComputeMod(std::string x)
+//{
+//
+//}
+//float ComputeEqual(wxString x)
+//{
+//
+//}
 Processor* Processor::GetInstance()
 {
 	if (processor_ == nullptr)
