@@ -82,7 +82,8 @@ void Window::OnButtonClick(wxCommandEvent& evt)
 		break;
 	case Window::EQUAL:
 		Processor::GetInstance()->Processor::SetQueueToRPN();
-		textBox->AppendText(" = " + Processor::GetInstance()->GetQueue());
+		textBox->AppendText(" = ");
+		//textBox->AppendText(Processor::GetInstance()->GetQueue());
 		break;
 	case Window::CLEAR:
 		Processor::GetInstance()->ResetProcessor();

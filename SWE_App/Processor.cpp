@@ -4,8 +4,8 @@ Processor* Processor::processor_ = nullptr;
 
 int CompareOP(wxString a, wxString b)
 {
-	int opA;
-	int opB;
+	int opA = 0;
+	int opB = 0;
 	//determine first operator
 	if (a == "+" || a == "-")
 	{
@@ -45,9 +45,8 @@ bool isOp(const wxString& _id)
 	return _id == "+" || _id == "-" || _id == "/" || _id == "*" 
 		|| _id == "s" || _id == "c" || _id == "t" || _id == "m";
 }
-bool Processor::SetQueueToRPN()
+wxString Processor::SetQueueToRPN()
 {
-	bool complete = true;
 	wxStack<wxString> opStack;
 	wxVector<wxString> output;
 
@@ -113,29 +112,24 @@ bool Processor::SetQueueToRPN()
 			//mismatched parenthesis
 			if (topOp != "(")
 			{
-				return false;
+				return "Error - Mis-matched parenthesis";
 			}
 		}
 		//otherwise it's a number
 		else
 		{
-			wxString temp = "";
-			while (!isOp(id))
-			{
-				temp.Append(id);
-			}
-			output.push_back(temp);
+			output.push_back(id);
 		}
 		//clear the queue
 		Processor::GetInstance()->ClearQueue();
 		//reset queue to RPN
 		for (wxVector<wxString>::iterator i = output.begin(); i != output.end(); )
 		{
-			Processor::GetInstance()->GetQueue().Append(*i);
+			queue.Append(*i);
 			++i;
 		}
 	}
-			return complete;
+			
 }
 //float ComputeAdd(std::string a, std::string b)
 //{

@@ -1,15 +1,15 @@
 #pragma once
-#include "Window.h"
 #include <wx/vector.h>
 #include <wx/stack.h>
+#include "Window.h"
 
 class Window;
 
 
 enum OP {
-	TIMES = 1,
 	ADD = 0,
 	SUB = 0,
+	TIMES = 1,
 	DIVIDE = 1,
 	SIN = 2,
 	COS = 2,
@@ -28,7 +28,6 @@ protected:
 private:
 	// queue to hold infix notation
 	wxString queue = "";
-	wxString::iterator q_iter = queue.begin();
 
 public:
 	//disable copy & assignment 
@@ -53,12 +52,10 @@ public:
 
 	//getters
 	wxString GetQueue() { return queue; }
-	wxString::iterator GetQIter() { return q_iter; }
 
 	//setters
-	bool SetQueueToRPN();
-	
-	wxString AddToQueue(wxString val) { return queue.Append(val); }
+	wxString SetQueueToRPN();	
+	void AddToQueue(wxString val) { queue.Append(val); }
 
 	//clear data
 	void ResetProcessor()
