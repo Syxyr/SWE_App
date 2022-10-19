@@ -27,10 +27,10 @@ protected:
 
 private:
 	// queue to hold infix notation
-	wxString queue = "";
 
 public:
 	//disable copy & assignment 
+	wxString queue = "";
 	Processor(Processor& other) = delete;
 	void operator=(Processor& other) = delete;
 
@@ -54,7 +54,7 @@ public:
 	wxString GetQueue() { return queue; }
 
 	//setters
-	wxString SetQueueToRPN();	
+	void SetQueueToRPN();	
 	void AddToQueue(wxString val) { queue.Append(val); }
 
 	//clear data

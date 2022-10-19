@@ -1,5 +1,7 @@
 #include "Processor.h"
 
+class WidgetApp;
+
 Processor* Processor::processor_ = nullptr;
 
 int CompareOP(wxString a, wxString b)
@@ -45,16 +47,16 @@ bool isOp(const wxString& _id)
 	return _id == "+" || _id == "-" || _id == "/" || _id == "*" 
 		|| _id == "s" || _id == "c" || _id == "t" || _id == "m";
 }
-wxString Processor::SetQueueToRPN()
+void Processor::SetQueueToRPN()
 {
 	wxStack<wxString> opStack;
 	wxVector<wxString> output;
 
 	//checking each char in queue
-	for (size_t i = 0; i < GetQueue().length(); i++)
+	for (size_t i = 0; i < queue.length(); i++)
 	{
 		//assign each char to string
-		wxString id = GetQueue()[i];
+		wxString id = queue[i];
 		
 		//check for operator
 		if (isOp(id))
@@ -83,7 +85,8 @@ wxString Processor::SetQueueToRPN()
 					else
 						break;
 				}
-			}//if stack empty, push first op into stack
+			}
+			//if stack empty, push first op into stack
 			opStack.push(op1);
 		}
 		//push left parenthesis to stack
@@ -112,7 +115,7 @@ wxString Processor::SetQueueToRPN()
 			//mismatched parenthesis
 			if (topOp != "(")
 			{
-				return "Error - Mis-matched parenthesis";
+				 //"Error - Mis-matched parenthesis";
 			}
 		}
 		//otherwise it's a number
@@ -120,16 +123,23 @@ wxString Processor::SetQueueToRPN()
 		{
 			output.push_back(id);
 		}
-		//clear the queue
-		Processor::GetInstance()->ClearQueue();
-		//reset queue to RPN
-		for (wxVector<wxString>::iterator i = output.begin(); i != output.end(); )
+		
+		
+	}
+	//add the rest of the operators
+	while (!opStack.empty())
+	{
+		wxString topOp = opStack.top();
+		output.push_back(topOp);
+		opStack.pop();
+	}
+	//reset queue to RPN
+	queue.clear();
+	for (wxVector<wxString>::iterator i = output.begin(); i != output.end(); )
 		{
 			queue.Append(*i);
 			++i;
 		}
-	}
-			
 }
 //float ComputeAdd(std::string a, std::string b)
 //{
